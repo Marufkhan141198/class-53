@@ -13,31 +13,17 @@
                                     <span>categories</span>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
-                                <form class="filter-items" id="collapseOne" action="" method="GET">                                    
-                                    <div class="item-label">
+                                <form class="filter-items" id="collapseOne" action="{{url('/shop')}}" method="GET">
+                                    @csrf                                    
+                                    @foreach ($generalCategories as $category)
+                                        <div class="item-label">
                                         <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>Hot Products</span>
+                                            <input type="checkbox" value="{{$category->id}}" id="cat_id" name="cat_id" onclick="forSubmitCategory()" class="checkbox" />
+                                            <span>{{$category->name}}</span>
                                         </label>
                                     </div>
-                                    <div class="item-label">
-                                        <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>Hot Products</span>
-                                        </label>
-                                    </div>
-                                    <div class="item-label">
-                                        <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>Hot Products</span>
-                                        </label>
-                                    </div>
-                                    <div class="item-label">
-                                        <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>Hot Products</span>
-                                        </label>
-                                    </div>
+                                    @endforeach
+                                    
                                 </form>
                             </div>
                             <div class="filter-items-outer">
@@ -45,42 +31,22 @@
                                     <span>sub categories</span>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
-                                <form class="filter-items" id="collapseTwo" action="" method="GET">
-                                    <div class="item-label">
+                                <form class="filter-items" id="collapseTwo" action="{{url('/shop')}}" method="GET">
+                                    @csrf
+                                   @foreach ($generalSubCategories as $subCategory)
+                                        <div class="item-label">
                                         <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
+                                            <input type="checkbox" value="{{$subCategory->id}}" onclick="forSubmitSubCategory()" id="sub_cat_id" name="sub_cat_id" class="checkbox" />
                                             <span>
-                                                Test Subcategory
+                                                {{$subCategory->name}}
                                             </span>
                                         </label>
                                     </div>
+                                    
+                                   @endforeach
                                     <div class="item-label">
                                         <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>
-                                                Test Subcategory
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <div class="item-label">
-                                        <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>
-                                                Test Subcategory
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <div class="item-label">
-                                        <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
-                                            <span>
-                                                Test Subcategory
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <div class="item-label">
-                                        <label>
-                                            <input type="checkbox" value="" id="" name="" class="checkbox" />
+                                            <input type="checkbox" value="" id="" onclick="forSubmitSubCategory()" name="sub_cat_id" class="checkbox" />
                                             <span>
                                                 Test Subcategory
                                             </span>
@@ -102,46 +68,64 @@
                                     <div class="right-side-box">
                                         <h4 class="product-qty">
                                             Total Products
-                                            <span class="number">10</span>
+                                            <span class="number">{{$productsCount}}</span>
                                         </h4>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6">
+                            @foreach ($products as $product )
+                                <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="product__item-outer">
                                     <div class="product__item-image-outer">
-                                        <a href="#" class="product__item-image-inner">
-                                            <img src="{{asset('/Frontend/images/product.png')}}" alt="Product Image" />
+                                        <a href="{{url('product-details/'.$product->slug)}}" class="product__item-image-inner">
+                                            <img src="{{asset('backend/image/product/'.$product->image)}}" alt="Product Image" />
                                         </a>
                                         <div class="product__item-add-cart-btn-outer">
-                                            <a href="#" class="product__item-add-cart-btn-inner">
+                                            <a href="{{url('add-to-cart/'.$product->id)}}" class="product__item-add-cart-btn-inner">
                                                 Add to Cart
                                             </a>
                                         </div>
                                         <div class="product__type-badge-outer">
                                             <span class="product__type-badge-inner">
-                                               Hot
+                                               {{ucfirst($product->product_type)}}
                                             </span>
                                         </div>
                                     </div>
                                     <div class="product__item-info-outer">
-                                        <a href="#" class="product__item-name">
-                                            Test Product
+                                        <a href="{{url('product-details/'.$product->slug)}}" class="product__item-name">
+                                            {{$product->name}}
                                         </a>
                                         <div class="product__item-price-outer">
-                                            <div class="product__item-discount-price">
-                                                <del>400 Tk.</del>
+                                            @if ($product->discount_price != null)
+                                                <div class="product__item-discount-price">
+                                                <del>{{$product->regular_price}} Tk.</del>
                                             </div>
                                             <div class="product__item-regular-price">
-                                                <span>300 Tk.</span>
+                                                <span>{{$product->discount_price}} Tk.</span>
                                             </div>
+                                            @else
+                                            <div class="product__item-regular-price">
+                                                <span>{{$product->regular_price}} Tk.</span>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </section>  
 @endsection
+@push('script')
+    <script>
+       function forSubmitCategory(){
+          document.getElementById('collapseOne').submit();
+       }
+       function forSubmitSubCategory(){
+          document.getElementById('collapseTwo').submit();
+       }
+    </script>
+@endpush

@@ -16,7 +16,7 @@
                                     <div class="right-side-box">
                                         <h4 class="product-qty">
                                             Total Products
-                                            <span class="number">40</span>
+                                            <span class="number">{{$productsCount}}</span>
                                         </h4>
                                     </div>
                                 </div>

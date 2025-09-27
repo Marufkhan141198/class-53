@@ -2,7 +2,8 @@
 @section('content')
     <section class="checkout-section">
             <div class="container">
-                <form action="" method="post" class="form-group billing-address-form" enctype="multipart/form-data">
+                <form action="{{url('/confirm-order')}}" method="post" class="form-group billing-address-form" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="checkout-wrapper">
@@ -10,28 +11,45 @@
                                     <h4 class="title">Billing / Shipping Details</h4>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" name="name" class="form-control" placeholder="Enter Full Name *"/>
+                                            <input type="text" name="name" class="form-control" placeholder="Enter Full Name"/>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" name="phone" class="form-control" placeholder="Phone *"/>
+                                            <input type="text" name="phone" class="form-control" placeholder="Phone *" required/>
                                         </div>
                                         <div class="col-md-12">
                                             <textarea rows="4" name="address" class="form-control" id="address"
                                                 placeholder="Enter Full Address"></textarea>
                                         </div>
+                                        @php
+                                            $totalPrice = 0;
+                                         @endphp
+                                        @foreach ($cartProducts as $cart)
+                                        @php
+									         $totalPrice = $totalPrice + $cart->qty*$cart->price;
+								        @endphp
+                                        @endforeach
                                         <div class="col-md-12 mt-3">
+                                            @if ($totalPrice >= 2000)
                                             <div style="background: lightgrey;padding: 10px;margin-bottom: 10px;">
-                                                <input type="radio" id="inside_dhaka" name="area" value="80"/>
+                                                <input type="radio" id="inside_dhaka" name="charge" value="0" onclick=""/>
+                                                <label for="inside_dhaka"
+                                                    style="font-size: 18px;font-weight: 600;color: #000;">Free Delivery (0
+                                                    Tk.)</label>
+                                            </div>
+                                             @else
+                                              <div style="background: lightgrey;padding: 10px;margin-bottom: 10px;">
+                                                <input type="radio" id="inside_dhaka" name="charge" value="80" onclick="insideDhakaCharge()"/>
                                                 <label for="inside_dhaka"
                                                     style="font-size: 18px;font-weight: 600;color: #000;">Inside Dhaka (80
                                                     Tk.)</label>
                                             </div>
                                             <div style="background: lightgrey;padding: 10px;">
-                                                <input type="radio" id="outside_dhaka" name="area" value="150"/>
+                                                <input type="radio" id="outside_dhaka" name="charge" value="150" onclick="outsideDhakaCharge()"/>
                                                 <label for="outside_dhaka"
                                                     style="font-size: 18px;font-weight: 600;color: #000;">Outside Dhaka (150
                                                     Tk.)</label>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -39,27 +57,34 @@
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout-items-wrapper">
-                                <div class="checkout-item-outer">
+                                @php
+                                    $totalPrice = 0;
+                                @endphp
+                                @foreach ($cartProducts as $cart)
+                                @php
+									$totalPrice = $totalPrice + $cart->qty*$cart->price;
+								@endphp
+                                    <div class="checkout-item-outer">
                                     <div class="checkout-item-left">
                                         <div class="checkout-item-image">
-                                            <img src="{{asset('/Frontend/images/product.png')}}" alt="Image"/>
+                                            <img src="{{asset('backend/image/product/'.$cart->product->image)}}" alt="Image"/>
                                         </div>
                                         <div class="checkout-item-info">
                                             <h6 class="checkout-item-name">
-                                                Test Product
+                                                {{$cart->product->name}}
                                             </h6>
                                             <p class="checkout-item-price">
-                                                300 Tk.
+                                                {{$cart->price}}
                                             </p>
                                             <span class="checkout-item-count">
-                                                1 item
+                                                {{$cart->qty}} item
                                             </span>
                                             <br />
                                             <span class="checkout-item-count">
-                                                Size:                                                 
+                                                Size: {{$cart->size}}                                                
                                             </span>                                                
                                             <span class="checkout-item-count">
-                                                Color: 
+                                                Color: {{$cart->color}}
                                             </span>
                                             <div class="checkout-product-incre-decre">
                                                 <button type="button" title="Decrement" class="qty-decrement-btn">
@@ -78,18 +103,30 @@
                                         </a>
                                     </div>
                                 </div>
+                                @endforeach
                                 <div class="sub-total-wrap">
                                     <div class="sub-total-item">
                                          <strong>Sub Total</strong>
-                                        <strong id="subTotal">৳ 300</strong>
+                                        <strong id="subTotal">৳ {{$totalPrice}}</strong>
+                                        <input type="hidden" id="inputTotalPrice" name="inputTotalPrice" value="{{$totalPrice}}">
                                     </div>
                                     <div class="sub-total-item">
                                         <strong>Delivery charge</strong>
-                                        <strong id="deliveryCharge">৳ 80</strong>
+                                        @if ($totalPrice >= 2000)
+                                        <strong id="deliveryCharge">৳ 0</strong>
+                                        @else
+                                            <strong id="deliveryCharge">৳ 80</strong>
+                                        @endif
                                     </div>
                                     <div class="sub-total-item grand-total">
                                          <strong>Grand Total</strong>
-                                         <strong id="grandTotal">৳ 380</strong>
+                                         @if ($totalPrice >= 2000)
+                                             <strong id="grandTotal">৳ {{$totalPrice + 0}}</strong>
+                                             <input type= "hidden" name="inputGrandTotal" id="inputGrandTotal" value="{{$totalPrice + 0}}">
+                                             @else
+                                             <strong id="grandTotal">৳ {{$totalPrice + 80}}</strong>
+                                             <input type= "hidden" name="inputGrandTotal" id="inputGrandTotal" value="{{$totalPrice + 80}}">
+                                         @endif
                                     </div>
                                 </div>
                                 <div class="payment-item-outer">
@@ -108,7 +145,7 @@
                                 <div class="order-place-btn-outer">
                                     <button type="submit" class="order-place-btn-inner">
                                         Place an Order
-                                        <i class="fas fa-sign-out-alt"></i>
+                                    <i class="fas fa-sign-out-alt"></i>
                                     </button>
                                 </div>
                             </div>
@@ -119,3 +156,23 @@
         </section>
 
 @endsection
+@push('script')
+    <script>
+        function insideDhakaCharge(){
+            document.getElementById('deliveryCharge').innerHTML = "tk " +80;
+            let totalPrice = parseFloat(document.getElementById('inputTotalPrice').value);
+            let grandTotal = totalPrice+80;
+            document.getElementById('grandTotal').innerHTML = "tk "+grandTotal;
+            document.getElementById('inputGrandTotal').value = grandTotal;
+        }  
+            
+            function outsideDhakaCharge(){
+            document.getElementById('deliveryCharge').innerHTML = "tk " +150;
+            let totalPrice = parseFloat(document.getElementById('inputTotalPrice').value);
+            let grandTotal = totalPrice+150;
+            document.getElementById('grandTotal').innerHTML = "tk "+grandTotal;
+            document.getElementById('inputGrandTotal').value = grandTotal;
+         }
+
+    </script>
+@endpush

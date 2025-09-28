@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\Policy;
 use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -14,12 +16,13 @@ class FrontendController extends Controller
 {
     public function index(){
         $categories = Category::orderBy('name','asc')->with('subCategory')->get();
+        $banners = Banner::get();
         $hotProducts = Product::where('product_type','hot')->orderBy('id','desc')->paginate(10);
         $newProducts = Product::where('product_type','new')->orderBy('id','desc')->paginate(10);
         $regularProducts = Product::where('product_type','regular')->orderBy('id','desc')->paginate(10);
         $discountProducts = Product::where('product_type','discount')->orderBy('id','desc')->paginate(10);
 
-        return view('frontend.index',compact('hotProducts','newProducts','regularProducts','discountProducts','categories'));
+        return view('frontend.index',compact('hotProducts','newProducts','regularProducts','discountProducts','categories','banners'));
     }   
     public function categoryProducts($slug,$id){
         $category = Category::find($id);
@@ -214,22 +217,34 @@ class FrontendController extends Controller
     }
 
     public function privacyPolicy(){
-        return view('frontend.privacy-policy');
+        $privacyPolicy = Policy::select('privacy_policy')->first();
+
+        return view('frontend.privacy-policy',compact('privacyPolicy'));
     }
     public function termsCondition(){
-        return view('frontend.terms-condition');
+        $termsConditions = Policy::select('terms_conditions')->first();
+        return view('frontend.terms-condition',compact('termsConditions'));
     }
     public function refundPolicy(){
-        return view('frontend.refund-policy');
+        $refundPolicy = Policy::select('refund_policy')->first();
+        return view('frontend.refund-policy',compact('refundPolicy'));
     }
     public function paymentPolicy(){
-        return view('frontend.payment-policy');
+        $paymentPolicy = Policy::select('payment_policy')->first();
+        return view('frontend.payment-policy',compact('paymentPolicy'));
     }
     public function aboutUs(){
-        return view('frontend.about-us');
+        $aboutUs = Policy::select('about_us')->first();
+        return view('frontend.about-us',compact('aboutUs'));
     }
     public function contactUs(){
         return view('frontend.contact-us');
+    }
+    public function searchProducts(Request $request){
+        $searchParam = $request->search;
+        $products = Product::where('name','LIKE','%'.$searchParam.'%')->get();
+        $productsCount = $products->count();
+        return view('frontend.search-products',compact('products','searchParam','productsCount'));
     }
     
 }

@@ -54,6 +54,9 @@ Route::get('/payment-policy', [FrontendController::class,'paymentPolicy']);
 Route::get('/about-us', [FrontendController::class,'aboutUs']);
 Route::get('/contact-us', [FrontendController::class,'contactUs']);
 
+//product searching.....
+Route::get('/search-products',[FrontendController::class,'searchProducts']);
+
 //Admin auth routes...
 Route::get('/admin/login',[AdminAuthController::class,'loginForm']);
 Route::get('/admin/logout',[AdminAuthController::class,'logoutAdmin']);

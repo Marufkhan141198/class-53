@@ -3,7 +3,9 @@
 use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +55,7 @@ Route::get('/refund-policy', [FrontendController::class,'refundPolicy']);
 Route::get('/payment-policy', [FrontendController::class,'paymentPolicy']);
 Route::get('/about-us', [FrontendController::class,'aboutUs']);
 Route::get('/contact-us', [FrontendController::class,'contactUs']);
+Route::post('/contact-message/store', [FrontendController::class,'contactMessageStore']);
 
 //product searching.....
 Route::get('/search-products',[FrontendController::class,'searchProducts']);
@@ -93,6 +96,32 @@ Route::get('/admin/product/size/delete/{id}',[ProductController::class,'sizeDele
 Route::get('/admin/product/galleryImage/delete/{id}',[ProductController::class,'galleryImageDelete']);
 Route::get('/admin/product/galleryImage/edit/{id}',[ProductController::class,'galleryImageEdit']);
 Route::post('/admin/product/galleryImage/update/{id}',[ProductController::class,'galleryImageUpdate']);
+
+
+//settings....
+Route::get('/admin/general-settings',[SettingController::class,'showSettings']);
+Route::post('/admin/general-settings/update',[SettingController::class,'updateSettings']);
+
+//policies and about us....
+Route::get('/admin/policies',[SettingController::class,'showPolicies']);
+Route::post('/admin/policies/update',[SettingController::class,'updatePolicies']);
+
+//banner..
+Route::get('/admin/show-banners',[SettingController::class,'showBanners']);
+Route::get('/admin/edit-banners/{id}',[SettingController::class,'editBanners']);
+Route::post('/admin/update-banners/{id}',[SettingController::class,'updateBanners']);
+
+//contact message....
+Route::get('/admin/contact-message/list',[SettingController::class,'showContactMessage']);
+Route::get('/admin/contact-message/delete/{id}',[SettingController::class,'deleteContactMessage']);
+
+//orders...
+Route::get('/admin/orders/{status}',[OrderController::class,'showOrders']);
+Route::post('/admin/orders/status/{id}',[OrderController::class,'updateOrderStatus']);
+Route::get('/admin/orders/delete/{id}',[OrderController::class,'orderDelete']);
+Route::get('/admin/orders/edit/{id}',[OrderController::class,'editOrder']);
+Route::post('/admin/orders/update/{id}',[OrderController::class,'updateOrder']);
+
 
 
 

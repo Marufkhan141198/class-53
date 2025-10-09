@@ -69,8 +69,7 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="nav-item menu-open">
+                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>
@@ -93,7 +92,101 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Orders
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('/admin/orders/all')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>All Orders</p>
+                            </a>
+                        </li> 
+                         <li class="nav-item">
+                            <a href="{{url('/admin/orders/pending')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Pending Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('/admin/orders/confirmed')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Confirmed Orders</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{url('/admin/orders/delivered')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Delivered Orders</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{url('/admin/orders/cancelled')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Cancelled Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('/admin/orders/returned')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Returned Orders</p>
+                            </a>
+                        </li>                                                               
+                    </ul>
+                </li>
 
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Contact Message
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('/admin/contact-message/list')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>List</p>
+                            </a>
+                        </li>                 
+                    </ul>
+                </li>
+
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Setting
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('/admin/general-settings')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Site Setting</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('/admin/policies')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Policies & About us</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('/admin/show-banners')}}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Banners</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 
                 

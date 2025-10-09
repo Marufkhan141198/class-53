@@ -29,7 +29,7 @@
                 </div>
                 <div class="home__slider-items-wrapper">
                     <div class="home__slider-item-outer">
-                        <img src="{{asset('backend/image/settings'.$siteSettings->hero_image)}}" alt="image"
+                        <img src="{{asset('backend/image/settings/'.$siteSettings->hero_image)}}" alt="image"
                             class="home__slider-item-image">
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                @foreach ($banners as $banner)
                     <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="banner-item-outer">
-                        <img src="{{ asset('/backend/images/banner/'.$banner->image) }}" alt="banner image" />
+                        <img src="{{asset('backend/image/banners/'.$banner->image) }}" alt="banner image" />
                     </div>
                 </div>
                @endforeach

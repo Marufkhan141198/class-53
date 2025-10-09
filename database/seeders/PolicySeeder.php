@@ -19,7 +19,9 @@ class PolicySeeder extends Seeder
                 'terms_conditions'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit',
                 'refund_policy'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit',
                 'payment_policy'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-                'about_us'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit'
+                'return_policy'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit',
+                'about_us'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit',
+
                 
             ]
         ];

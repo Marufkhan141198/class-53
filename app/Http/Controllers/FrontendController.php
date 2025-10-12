@@ -86,7 +86,12 @@ class FrontendController extends Controller
                 $cart->price = $product->discount_price;
             }
             $cart->save();
-            return redirect()->back();
+            if($request->action == "addToCart"){
+                return redirect()->back();
+            }
+            elseif($request->action == "buyNow"){
+                return redirect('/checkout');
+            }
         }
         elseif($cartProduct != null){
             $cartProduct->qty = $request->qty + $cartProduct->qty;
@@ -126,6 +131,9 @@ class FrontendController extends Controller
             if($product->discount_price != null){
                 $cart->price = $product->discount_price;
             }
+            
+
+    return redirect()->back();
             $cart->save();
             toastr()->success('Data has been saved successfully!');
 

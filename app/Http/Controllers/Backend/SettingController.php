@@ -7,6 +7,7 @@ use App\Models\Banner;
 use App\Models\contactMessage;
 use App\Models\Policy;
 use App\Models\Settings;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -131,6 +132,24 @@ class SettingController extends Controller
         toastr()->success('Deleted successfully');
         return redirect()->back();
 
+    }
+
+    public function showCredentials()
+    {
+        $user = User::select('name','email')->first();
+        return view('backend.settings.show-credentials',compact('user'));
+    }
+
+    public function updateCredentials(Request $request)
+    {
+        $user = User::first();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $user->save();
+        toastr()->success('Credentials upload successfully');
+        return redirect()->back();
     }
 
 }

@@ -122,6 +122,13 @@ Route::get('/admin/orders/delete/{id}',[OrderController::class,'orderDelete']);
 Route::get('/admin/orders/edit/{id}',[OrderController::class,'editOrder']);
 Route::post('/admin/orders/update/{id}',[OrderController::class,'updateOrder']);
 
+//Courier...
+Route::get('/admin/order-courier-entry/{order_id}',[OrderController::class,'courierEntry']);
+
+//Change Credentials...
+Route::get('/admin/change-credentials',[SettingController::class,'showCredentials']);
+Route::post('/admin/update-credentials',[SettingController::class,'updateCredentials']);
+
 
 
 

@@ -67,7 +67,7 @@
                                 <div class="mb-3 col-md-12">
                                     <label for="exampleInputEmail1" class="form-label">Courier Name*</label>
                                      <select name="courier_name" class="form-control" id="courier_name">
-                                        <option value="" disabled>Select Courier</option>
+                                        <option selected disabled>Select Courier</option>
                                         <option value="steadfast" @if ($orders->courier_name == "steadfast")
                                             selected
                                         @endif>Steadfast</>

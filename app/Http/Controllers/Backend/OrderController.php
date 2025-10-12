@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
@@ -87,5 +88,50 @@ class OrderController extends Controller
         toastr()->success('Updated successfully');
         return redirect()->back();
 
+    }
+
+    //courier...
+
+    public function courierEntry($order_id)
+    {
+        $orders = Order::find($order_id);
+        if($orders->courier_name == "steadfast"){
+            
+        $apiEndpoint = "https://portal.packzy.com/api/v1/create_order";
+        $header = [
+            'Api-Key' => "qwzgaqw0ghqo1zm8mdht1czgmpucswhr",
+            'Secret-Key' => "j6uexh7rumnobjotms0uwygd",
+            'Content-Type' => "application/json"
+        ];
+
+        //body parameters..
+        $invoiceNumber = $orders->invoice_number;
+        $customerName = $orders->name;
+        $customerPhone = $orders->phone;
+        $customerAddress = $orders->address;
+        $amount = $orders->price;
+
+        $payLoad = [
+            'invoice' => $invoiceNumber,
+            'recipient_name' => $customerName,
+            'recipient_phone' => $customerPhone,
+            'recipient_address' => $customerAddress,
+            'cod_amount' => $amount
+        ];
+        $response = Http::withHeaders($header)->post($apiEndpoint,$payLoad);
+        $jsonData = $response->json();
+        // dd($jsonData);
+        if(isset($jsonData['consignment'])){
+            $orders->traking_code = $jsonData['consignment']['tracking_code'];
+            $orders->consignment_id = $jsonData['consignment']['consignment_id'];
+            $orders->save();
+        }
+        }
+
+        elseif($orders->courier_name == "pathao"){
+
+        }
+        toastr()->success("Courier entry successfully");
+        return redirect()->back();
     }
 }

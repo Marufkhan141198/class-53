@@ -127,7 +127,11 @@ Route::get('/admin/order-courier-entry/{order_id}',[OrderController::class,'cour
 
 //Change Credentials...
 Route::get('/admin/change-credentials',[SettingController::class,'showCredentials']);
-Route::post('/admin/update-credentials',[SettingController::class,'updateCredentials']);
+
+// invoice...
+
+Route::get('/admin/print-invoice/{order_id}',[SettingController::class,'printInvoice']);
+
 
 
 

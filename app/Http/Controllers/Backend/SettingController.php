@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\contactMessage;
+use App\Models\Order;
 use App\Models\Policy;
 use App\Models\Settings;
 use App\Models\User;
@@ -150,6 +151,13 @@ class SettingController extends Controller
         $user->save();
         toastr()->success('Credentials upload successfully');
         return redirect()->back();
+    }
+
+    public function printInvoice($order_id)
+    {
+        $orders = Order::with('orderDetails')->where('id',$order_id)->first();
+        
+        return view('backend.orders.invoice',compact('orders'));
     }
 
 }

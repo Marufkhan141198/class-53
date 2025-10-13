@@ -71,7 +71,10 @@
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $order->created_at }}</td>
-                                            <td>{{ $order->invoice_number }}</td>
+                                            <td>{{ $order->invoice_number }}</br>
+                                                <a href="{{url('/admin/print-invoice/'.$order->id)}}"class="btn btn-success">Print</a>
+                                            </td>
+
                                             <td>
                                                 @foreach ($order->orderDetails as $details)
                                                     <img src="{{ asset('backend/image/product/' . $details->product->image) }}"

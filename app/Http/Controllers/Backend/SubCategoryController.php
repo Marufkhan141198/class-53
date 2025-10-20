@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubCategoryRequest;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class SubCategoryController extends Controller
         return view('backend.subcategory.create',compact('categories'));
     }
 
-    public function subCategoryStore(Request $request)
+    public function subCategoryStore(SubCategoryRequest $request)
     {
         $subcategory = new SubCategory();
         $subcategory->name = $request->name;

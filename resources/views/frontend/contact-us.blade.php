@@ -14,19 +14,28 @@
                                 <div class="col-md-12">
                                     <div class="input-item-wrapper">
                                         <label for="name">Name</label>
-                                        <input type="text" name="name" value="" placeholder="Name*" class="form-control" required/>
+                                        <input type="text" name="name" value="{{old('name')}}" placeholder="Name*" class="form-control"/>
+                                        @error('name')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="input-item-wrapper">
                                         <label for="phone">Phone</label>
-                                        <input type="text" name="phone" value="" placeholder="Phone*" class="form-control" required />
+                                        <input type="text" name="phone" value="{{old('phone')}}" placeholder="Phone*" class="form-control"/>
+                                        @error('phone')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="input-item-wrapper">
                                         <label for="phone">Email</label>
-                                        <input type="email" name="email" value="" placeholder="Email*" class="form-control" required />
+                                        <input type="email" name="email" value="{{old('email')}}" placeholder="Email*" class="form-control"/>
+                                        @error('email')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                
@@ -34,7 +43,10 @@
                                 <div class="col-md-12">
                                     <div class="input-item-wrapper">
                                         <label for="issue">Your Message</label>
-                                        <textarea name="message" cols="50" rows="5" class="form-control" required></textarea>
+                                        <textarea name="message" cols="50" rows="5" class="form-control">{{old('message')}}</textarea>
+                                        @error('message')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             <div class="return-process-btn-outer">

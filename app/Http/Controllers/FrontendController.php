@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfirmOrderRequest;
+use App\Http\Requests\ContactMessagesRequest;
 use App\Models\Banner;
 use App\Models\Cart;
 use App\Models\Category;
@@ -177,7 +179,7 @@ class FrontendController extends Controller
     public function checkOut(){
         return view('frontend.checkout');
     }
-    public function confirmOrder(Request $request){
+    public function confirmOrder(ConfirmOrderRequest $request){
         $order = new Order();
 
         $order->ip_address = $request->ip();
@@ -249,11 +251,12 @@ class FrontendController extends Controller
         return view('frontend.about-us',compact('aboutUs'));
     }
     public function contactUs(){
-        toastr()->success('Message sent successfully');
+        // toastr()->success('Message sent successfully');
         return view('frontend.contact-us');
     }
-    public function contactMessageStore(Request $request){
-        $contactMessage = new contactMessage();
+    public function contactMessageStore(ContactMessagesRequest $request)
+    {
+        $contactMessage = new ContactMessage();
 
 
         $contactMessage->name = $request->name;

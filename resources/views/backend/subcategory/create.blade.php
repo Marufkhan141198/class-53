@@ -45,8 +45,10 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">SubCategory Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" required />
-                                    
+                                    <input type="text" class="form-control" name="name" id="name"/>
+                                     @error('name')
+                                        <p class="text-danger">{{$message}}</p>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Select Category</label>
@@ -56,6 +58,9 @@
                                             <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     </select>
+                                    @error('cat_id')
+                                        <p class="text-danger">{{$message}}</p>
+                                    @enderror
                                     
                                     
                                 </div>

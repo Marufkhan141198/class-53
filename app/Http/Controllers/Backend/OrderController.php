@@ -134,4 +134,16 @@ class OrderController extends Controller
         toastr()->success("Courier entry successfully");
         return redirect()->back();
     }
+
+    public function updateOrderDetails(Request $request,$id)
+    {
+        $details = OrderDetails::find($id);
+
+        $details->qty = $request->qty;
+        $details->color = $request->color;
+        $details->size = $request->size;
+
+        $details->save();
+        return response()->json('Updated Successfully');
+    }
 }

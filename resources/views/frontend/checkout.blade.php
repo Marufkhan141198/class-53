@@ -11,14 +11,20 @@
                                     <h4 class="title">Billing / Shipping Details</h4>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="text" name="name" class="form-control" placeholder="Enter Full Name"/>
+                                            <input type="text" name="name" value="{{old('name')}}" class="form-control" placeholder="Enter Full Name"/>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" name="phone" class="form-control" placeholder="Phone *" required/>
+                                            <input type="text" name="phone" value="{{old('phone')}}" class="form-control" placeholder="Phone *"/>
+                                            @error('phone')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-md-12">
                                             <textarea rows="4" name="address" class="form-control" id="address"
-                                                placeholder="Enter Full Address"></textarea>
+                                                placeholder="Enter Full Address">{{old('address')}}</textarea>
+                                             @error('address')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror   
                                         </div>
                                         @php
                                             $totalPrice = 0;
@@ -36,6 +42,7 @@
                                                     style="font-size: 18px;font-weight: 600;color: #000;">Free Delivery (0
                                                     Tk.)</label>
                                             </div>
+                                            
                                              @else
                                               <div style="background: lightgrey;padding: 10px;margin-bottom: 10px;">
                                                 <input type="radio" id="inside_dhaka" name="charge" value="80" onclick="insideDhakaCharge()"/>
@@ -51,6 +58,9 @@
                                             </div>
                                             @endif
                                         </div>
+                                        @error('charge')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
                                     </div>
                                 </div>
                             </div>

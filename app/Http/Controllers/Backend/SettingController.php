@@ -160,4 +160,11 @@ class SettingController extends Controller
         return view('backend.orders.invoice',compact('orders'));
     }
 
-}
+    public function printBulkInvoice(Request $request)
+    {
+        $orderIds = $request->order_id;
+        $orders = Order::with('orderDetails')->whereIn('id',$orderIds)->get();
+        return view('backend.orders.invoice-bulk',compact('orders'));
+    }
+
+} 

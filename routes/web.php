@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\FrontendController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,18 +62,23 @@ Route::post('/contact-message/store', [FrontendController::class,'contactMessage
 Route::get('/search-products',[FrontendController::class,'searchProducts']);
 
 //Admin auth routes...
-Route::get('/admin/login',[AdminAuthController::class,'loginForm']);
+Route::get('/admin/login',[AdminAuthController::class,'loginForm'])->name('admin.login');
 Route::get('/admin/logout',[AdminAuthController::class,'logoutAdmin']);
-Auth::routes();
+
+
+Auth::routes(['register' => false]);
 Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard']);
 
 //Category routes...
-Route::get('/admin/category/create',[CategoryController::class,'categoryCreate']);
-Route::post('/admin/category/store',[CategoryController::class,'categoryStore']);
-Route::get('/admin/category/list',[CategoryController::class,'categoryList']);
-Route::get('/admin/category/delete/{id}',[CategoryController::class,'categoryDelete']);
-Route::get('/admin/category/edit/{id}',[CategoryController::class,'categoryEdit']);
-Route::post('/admin/category/update/{id}',[CategoryController::class,'categoryUpdate']);
+Route::middleware(['role:admin,editor'])->group(function(){
+ Route::get('/admin/category/create',[CategoryController::class,'categoryCreate']);
+ Route::post('/admin/category/store',[CategoryController::class,'categoryStore']);
+ Route::get('/admin/category/list',[CategoryController::class,'categoryList']);
+ Route::get('/admin/category/delete/{id}',[CategoryController::class,'categoryDelete']);
+ Route::get('/admin/category/edit/{id}',[CategoryController::class,'categoryEdit']);
+ Route::post('/admin/category/update/{id}',[CategoryController::class,'categoryUpdate']);
+});
+
 
 //subcategory routes...
 
@@ -121,7 +127,7 @@ Route::post('/admin/orders/status/{id}',[OrderController::class,'updateOrderStat
 Route::get('/admin/orders/delete/{id}',[OrderController::class,'orderDelete']);
 Route::get('/admin/orders/edit/{id}',[OrderController::class,'editOrder']);
 Route::post('/admin/orders/update/{id}',[OrderController::class,'updateOrder']);
-
+Route::post('/admin/orders-details/update/{id}',[OrderController::class,'updateOrderDetails']);
 //Courier...
 Route::get('/admin/order-courier-entry/{order_id}',[OrderController::class,'courierEntry']);
 
@@ -131,7 +137,7 @@ Route::get('/admin/change-credentials',[SettingController::class,'showCredential
 // invoice...
 
 Route::get('/admin/print-invoice/{order_id}',[SettingController::class,'printInvoice']);
-
+Route::post('/admin/bulk-print-invoice',[SettingController::class,'printBulkInvoice']);
 
 
 
